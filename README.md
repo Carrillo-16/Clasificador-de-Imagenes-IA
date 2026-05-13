@@ -21,41 +21,29 @@ Este repositorio no incluye dependencias pesadas ni archivos generados localment
 Para ejecutar el backend después de descargar el proyecto, se deben instalar las dependencias en un entorno virtual de Python. Se recomienda usar Python 3.11 porque TensorFlow estable puede presentar problemas con versiones más recientes como Python 3.13 o Python 3.14.
 
 Comandos para instalar el backend
-
-cd C:\Users\default.DESKTOP-CNVIP6E\Desktop\Proyectos\IA\BACKENDIA
 py -3.11 -m venv venv
 venv\Scripts\activate
 pip install -r requirements.txt
 
 Comando para levantar el backend
-
-cd C:\Users\default.DESKTOP-CNVIP6E\Desktop\Proyectos\IA\BACKENDIA
 venv\Scripts\activate
 uvicorn main:aplicacion --reload
 
 También puede ejecutarse sin activar manualmente el entorno virtual usando este comando
-
-cd C:\Users\default.DESKTOP-CNVIP6E\Desktop\Proyectos\IA\BACKENDIA
 venv\Scripts\python.exe -m uvicorn main:aplicacion --reload
 
 La API quedará disponible en la siguiente dirección
-
 http://127.0.0.1:8000
 
 Para ejecutar el frontend después de descargar el proyecto, se deben instalar las dependencias de Node.js.
 
 Comandos para instalar el frontend
-
-cd C:\Users\default.DESKTOP-CNVIP6E\Desktop\Proyectos\IA\FRONTENDIA
 npm install
 
 Comando para levantar el frontend
-
-cd C:\Users\default.DESKTOP-CNVIP6E\Desktop\Proyectos\IA\FRONTENDIA
 npm run dev
 
 La interfaz web quedará disponible normalmente en la siguiente dirección
-
 http://127.0.0.1:5173
 
 Para usar el sistema completo, primero debe estar ejecutándose el backend y luego el frontend. Después de abrir la interfaz web, se puede cargar una imagen, seleccionar un modelo y ejecutar la predicción. Si se usa la opción de comparación, el sistema enviará la misma imagen a MobileNetV2 y ResNet50 para mostrar los resultados de ambos modelos.
