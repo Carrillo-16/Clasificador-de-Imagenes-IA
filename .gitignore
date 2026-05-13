@@ -1,0 +1,23 @@
+# Python
+BACKENDIA/venv/
+BACKENDIA/__pycache__/
+BACKENDIA/**/__pycache__/
+BACKENDIA/*.pyc
+
+# Archivos generados por pruebas locales
+BACKENDIA/clasificador_imagenes.db
+BACKENDIA/imagenes_analizadas/
+BACKENDIA/imagen_prueba.jpg
+BACKENDIA/backend_uvicorn.log
+BACKENDIA/backend_uvicorn_error.log
+
+# Node / Vite
+FRONTENDIA/node_modules/
+FRONTENDIA/dist/
+FRONTENDIA/frontend_vite.log
+FRONTENDIA/frontend_vite_error.log
+
+# Sistema / editor
+.DS_Store
+Thumbs.db
+.vscode/
