@@ -2,7 +2,7 @@ import axios from "axios";
 import { NombreModelo, ResultadoPrediccion } from "../tipos/prediccion";
 
 const clienteApi = axios.create({
-  baseURL: "http://127.0.0.1:8000"
+  baseURL: import.meta.env.VITE_API_URL || (import.meta.env.PROD ? "/api" : "http://127.0.0.1:8000")
 });
 
 export async function enviarImagenParaPrediccion(
