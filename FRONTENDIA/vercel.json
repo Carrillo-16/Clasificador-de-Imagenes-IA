@@ -2,7 +2,7 @@
   "rewrites": [
     {
       "source": "/api/:path*",
-      "destination": "https://clasificador-de-imagenes-ia.onrender.com/:path*"
+      "destination": "https://carrillo-16-clasificador-imagenes-backend.hf.space/:path*"
     }
   ]
 }
