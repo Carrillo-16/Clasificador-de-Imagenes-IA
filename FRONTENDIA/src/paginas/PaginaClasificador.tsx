@@ -26,10 +26,15 @@ export function PaginaClasificador() {
 
     try {
       if (compararModelos) {
-        const resultados = await Promise.all([
-          enviarImagenParaPrediccion(imagenSeleccionada, "MobileNetV2"),
-          enviarImagenParaPrediccion(imagenSeleccionada, "ResNet50")
-        ]);
+        const resultados: TipoResultadoPrediccion[] = [];
+
+        const resultadoMobileNet = await enviarImagenParaPrediccion(imagenSeleccionada, "MobileNetV2");
+        resultados.push(resultadoMobileNet);
+        cambiarResultadosPrediccion([...resultados]);
+
+        const resultadoResNet = await enviarImagenParaPrediccion(imagenSeleccionada, "ResNet50");
+        resultados.push(resultadoResNet);
+
         cambiarResultadosPrediccion(resultados);
       } else {
         const resultado = await enviarImagenParaPrediccion(imagenSeleccionada, nombreModelo);
