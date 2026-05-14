@@ -1,0 +1,9 @@
+venv/
+__pycache__/
+**/__pycache__/
+*.pyc
+
+clasificador_imagenes.db
+imagenes_analizadas/
+imagen_prueba.jpg
+*.log

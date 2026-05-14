@@ -1,3 +1,12 @@
+---
+title: Clasificador Imagenes Backend
+colorFrom: blue
+colorTo: gray
+sdk: docker
+app_port: 7860
+pinned: false
+---
+
 # Clasificador General de Imagenes con ImageNet
 
 Proyecto academico simple con FastAPI, TensorFlow/Keras, SQLAlchemy y SQLite.
