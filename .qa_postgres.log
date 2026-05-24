@@ -12,3 +12,5 @@
 	
 2026-05-23 23:27:23.529 CST [3088] LOG:  empezando checkpoint: time
 2026-05-23 23:27:34.879 CST [3088] LOG:  checkpoint completo: escritos 104 búfers (0.6%); 0 archivos WAL añadidos, 0 eliminados, 0 reciclados; write=11.286 s, sync=0.045 s, total=11.351 s; archivos sincronizados=61, más largo=0.007 s, promedio=0.001 s; distancia=277 kB, estimación=4405 kB; lsn=0/1A7CCC0, lsn de redo=0/1A7CC88
+2026-05-23 23:32:23.883 CST [3088] LOG:  empezando checkpoint: time
+2026-05-23 23:32:25.439 CST [3088] LOG:  checkpoint completo: escritos 15 búfers (0.1%); 0 archivos WAL añadidos, 0 eliminados, 0 reciclados; write=1.527 s, sync=0.011 s, total=1.556 s; archivos sincronizados=15, más largo=0.002 s, promedio=0.001 s; distancia=6 kB, estimación=3965 kB; lsn=0/1A7E6B8, lsn de redo=0/1A7E680
