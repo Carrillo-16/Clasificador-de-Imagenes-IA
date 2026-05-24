@@ -1,0 +1,5 @@
+node_modules
+dist
+.env
+frontend_vite.log
+frontend_vite_error.log

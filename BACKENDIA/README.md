@@ -3,92 +3,51 @@ title: Clasificador Imagenes Backend
 colorFrom: blue
 colorTo: gray
 sdk: docker
-app_port: 7860
+app_port: 8000
 pinned: false
 ---
 
-# Clasificador General de Imagenes con ImageNet
+# Backend Clasificador General de Imagenes
 
-Proyecto academico simple con FastAPI, TensorFlow/Keras, SQLAlchemy y SQLite.
+API academica con FastAPI, TensorFlow/Keras, SQLAlchemy y PostgreSQL.
 
-El sistema usa modelos preentrenados sobre ImageNet, por lo que no necesita dataset personalizado ni entrenamiento manual.
+## Instalacion
 
-## Ruta backend
-
-`C:\Users\default.DESKTOP-CNVIP6E\Desktop\Proyectos\IA\BACKENDIA`
-
-## Modelos incluidos
-
-- MobileNetV2 con `weights="imagenet"`
-- ResNet50 con `weights="imagenet"`
-
-La primera ejecucion puede descargar pesos oficiales de Keras si no existen en cache local.
-
-## Instalacion backend
-
-Usar Python 3.11. El equipo tiene Python 3.14 instalado, pero TensorFlow estable no es compatible con esa version.
+Usar Python 3.11.
 
 ```bash
-cd C:\Users\default.DESKTOP-CNVIP6E\Desktop\Proyectos\IA\BACKENDIA
+cd BACKENDIA
 py -3.11 -m venv venv
 venv\Scripts\activate
 pip install -r requirements.txt
 ```
 
-## Ejecutar API
+## Ejecutar
 
 ```bash
-cd C:\Users\default.DESKTOP-CNVIP6E\Desktop\Proyectos\IA\BACKENDIA
-venv\Scripts\activate
-uvicorn main:aplicacion --reload
+uvicorn main:aplicacion --reload --host 0.0.0.0 --port 8000
 ```
 
-Otra forma equivalente sin activar manualmente el entorno:
+Rutas:
 
-```bash
-cd C:\Users\default.DESKTOP-CNVIP6E\Desktop\Proyectos\IA\BACKENDIA
-venv\Scripts\python.exe -m uvicorn main:aplicacion --reload
-```
-
-Endpoint principal:
-
-```text
-POST http://127.0.0.1:8000/predecir
-```
-
-Campos esperados:
-
-- `imagen`: archivo de imagen.
-- `nombre_modelo`: `MobileNetV2` o `ResNet50`.
-
-Respuesta esperada:
-
-```json
-{
-  "modelo": "MobileNetV2",
-  "predicciones": [
-    {
-      "clase": "golden_retriever",
-      "confianza": "95.00%"
-    }
-  ]
-}
-```
+- `GET /`
+- `GET /salud`
+- `POST /predecir`
 
 ## Base de datos
 
-El proyecto usa SQLite por defecto:
+PostgreSQL local:
 
-```text
-clasificador_imagenes.db
-```
+- Usuario: `clasificador_app`
+- Contrasena: `ClasificadorIA2026Local`
+- Base de datos: `clasificador_imagenes_ia`
+- URL: `postgresql+psycopg://clasificador_app:ClasificadorIA2026Local@localhost:5432/clasificador_imagenes_ia`
 
-Se guarda la ruta de la imagen analizada, el modelo usado, la prediccion principal, el porcentaje de confianza y la fecha.
+La configuracion se cambia con `DATABASE_URL` en `.env`.
 
-Las imagenes subidas se almacenan localmente en:
+## Modelos
 
-```text
-imagenes_analizadas/
-```
+- MobileNetV2 con `weights="imagenet"`
+- ResNet50 con `weights="imagenet"`
 
-Para migrar despues a SQL Server, cambia `URL_BASE_DATOS` en `base_datos/conexion.py`.
+La primera ejecucion puede descargar pesos oficiales de Keras si no existen en cache local.

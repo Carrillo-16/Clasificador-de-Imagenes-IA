@@ -1,13 +1,19 @@
+import os
+
+from dotenv import load_dotenv
 from sqlalchemy import create_engine
 from sqlalchemy.orm import sessionmaker
 
-# Para migrar a SQL Server despues, cambiar esta URL por una cadena compatible
-# con SQLAlchemy, por ejemplo: mssql+pyodbc://usuario:clave@servidor/base?driver=ODBC+Driver+17+for+SQL+Server
-URL_BASE_DATOS = "sqlite:///./clasificador_imagenes.db"
+load_dotenv()
+
+URL_BASE_DATOS = os.getenv(
+    "DATABASE_URL",
+    "postgresql+psycopg://clasificador_app:ClasificadorIA2026Local@localhost:5432/clasificador_imagenes_ia",
+)
 
 argumentos_conexion = {"check_same_thread": False} if URL_BASE_DATOS.startswith("sqlite") else {}
 
-motor_base_datos = create_engine(URL_BASE_DATOS, connect_args=argumentos_conexion)
+motor_base_datos = create_engine(URL_BASE_DATOS, connect_args=argumentos_conexion, pool_pre_ping=True)
 SesionLocal = sessionmaker(autocommit=False, autoflush=False, bind=motor_base_datos)
 
 

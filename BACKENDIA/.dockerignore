@@ -1,9 +1,9 @@
-venv/
-__pycache__/
-**/__pycache__/
+venv
+__pycache__
+**/__pycache__
 *.pyc
-
+.env
 clasificador_imagenes.db
-imagenes_analizadas/
-imagen_prueba.jpg
-*.log
+imagenes_analizadas
+backend_uvicorn.log
+backend_uvicorn_error.log

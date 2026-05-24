@@ -4,4 +4,6 @@ tensorflow==2.15.1
 numpy==1.26.4
 pillow==11.0.0
 sqlalchemy==2.0.36
+psycopg[binary]==3.2.3
 python-multipart==0.0.20
+python-dotenv==1.0.1

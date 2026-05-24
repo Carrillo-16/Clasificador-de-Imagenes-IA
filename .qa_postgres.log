@@ -1,0 +1,14 @@
+2026-05-23 23:12:22.967 CST [17288] LOG:  iniciando PostgreSQL 16.13, compiled by Visual C++ build 1944, 64-bit
+2026-05-23 23:12:22.974 CST [17288] LOG:  escuchando en la dirección IPv6 «::1», port 55432
+2026-05-23 23:12:22.975 CST [17288] LOG:  escuchando en la dirección IPv4 «127.0.0.1», port 55432
+2026-05-23 23:12:23.077 CST [12284] LOG:  el sistema de bases de datos fue apagado en 2026-05-23 23:12:04 CST
+2026-05-23 23:12:23.116 CST [17288] LOG:  el sistema de bases de datos está listo para aceptar conexiones
+2026-05-23 23:12:25.467 CST [6220] FATAL:  no existe el rol «Administrator»
+2026-05-23 23:13:55.459 CST [300] FATAL:  no existe el rol «Administrator»
+2026-05-23 23:17:23.105 CST [3088] LOG:  empezando checkpoint: time
+2026-05-23 23:19:17.498 CST [3088] LOG:  checkpoint completo: escritos 1025 búfers (6.3%); 0 archivos WAL añadidos, 0 eliminados, 0 reciclados; write=114.155 s, sync=0.217 s, total=114.397 s; archivos sincronizados=317, más largo=0.017 s, promedio=0.001 s; distancia=4863 kB, estimación=4863 kB; lsn=0/1A376E0, lsn de redo=0/1A376A8
+2026-05-23 23:24:57.620 CST [5384] FATAL:  no existe el rol «Administrator»
+2026-05-23 23:26:50.531 CST [11392] LOG:  no se pudo recibir datos del cliente: An existing connection was forcibly closed by the remote host.
+	
+2026-05-23 23:27:23.529 CST [3088] LOG:  empezando checkpoint: time
+2026-05-23 23:27:34.879 CST [3088] LOG:  checkpoint completo: escritos 104 búfers (0.6%); 0 archivos WAL añadidos, 0 eliminados, 0 reciclados; write=11.286 s, sync=0.045 s, total=11.351 s; archivos sincronizados=61, más largo=0.007 s, promedio=0.001 s; distancia=277 kB, estimación=4405 kB; lsn=0/1A7CCC0, lsn de redo=0/1A7CC88

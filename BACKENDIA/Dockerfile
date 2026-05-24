@@ -11,6 +11,6 @@ RUN pip install --no-cache-dir --upgrade pip \
 
 COPY . .
 
-EXPOSE 7860
+EXPOSE 8000
 
-CMD ["python", "-m", "uvicorn", "main:aplicacion", "--host", "0.0.0.0", "--port", "7860"]
+CMD ["python", "-m", "uvicorn", "main:aplicacion", "--host", "0.0.0.0", "--port", "8000"]

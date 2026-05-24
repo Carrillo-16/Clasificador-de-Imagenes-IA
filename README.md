@@ -1,53 +1,80 @@
-Clasificador-de-Imagenes-IA
+# Clasificador de Imagenes IA
 
-Repositorio para el sistema de clasificación de imágenes con transferencia de aprendizaje para la clase de inteligencia artificial IA, ingeniería en sistemas.
+Sistema academico de clasificacion general de imagenes con FastAPI, TensorFlow/Keras, React, TypeScript, PostgreSQL y SQLAlchemy.
 
-Este proyecto corresponde a un sistema académico de clasificación general de imágenes. Su propósito es permitir que un usuario cargue una imagen desde una interfaz web y obtenga una predicción automática utilizando modelos de inteligencia artificial preentrenados.
+El usuario carga una imagen desde la interfaz web, selecciona MobileNetV2 o ResNet50, y el backend devuelve el TOP 5 de clases ImageNet con porcentajes de confianza. La API guarda cada prediccion en PostgreSQL junto con la ruta de la imagen analizada, el modelo usado y la fecha.
 
-El sistema está dividido en dos partes principales. El backend se encuentra en la carpeta BACKENDIA y contiene la API desarrollada con Python y FastAPI. El frontend se encuentra en la carpeta FRONTENDIA y contiene la interfaz web desarrollada con React, TypeScript y Axios.
+## Despliegue completo
 
-El backend utiliza TensorFlow y Keras para cargar modelos preentrenados sobre ImageNet. Esto permite reconocer categorías generales sin necesidad de entrenar un dataset personalizado. Entre las categorías que el sistema puede reconocer se encuentran animales, vehículos, objetos, alimentos, herramientas, tecnología, prendas de vestir y muchas otras clases incluidas en ImageNet.
+Con Docker instalado, levanta PostgreSQL, backend y frontend con:
 
-Los modelos incluidos son MobileNetV2 y ResNet50. Ambos modelos se cargan con pesos preentrenados de ImageNet. MobileNetV2 es un modelo ligero y eficiente, adecuado para predicciones rápidas y equipos con recursos limitados. ResNet50 es un modelo más profundo, con mayor capacidad de representación, útil para comparar resultados y analizar diferencias entre arquitecturas.
+```bash
+docker compose up --build
+```
 
-Cuando el usuario sube una imagen, el backend procesa el archivo, adapta el tamaño de la imagen al formato esperado por el modelo seleccionado, ejecuta la predicción y obtiene las cinco clases más probables. La respuesta incluye el nombre de la clase detectada y su porcentaje de confianza.
+Servicios:
 
-La base de datos utilizada es SQLite mediante SQLAlchemy. El sistema guarda información de la imagen analizada, el modelo utilizado, la predicción principal, el porcentaje de confianza y la fecha de la predicción. SQLite se utiliza por su simplicidad y porque no requiere instalación adicional, lo cual lo hace adecuado para un proyecto académico. La estructura está preparada para que posteriormente pueda migrarse a otro motor de base de datos si fuera necesario.
+- Frontend: `http://127.0.0.1:8080`
+- Backend: `http://127.0.0.1:8000`
+- Health check: `http://127.0.0.1:8000/salud`
+- PostgreSQL: `127.0.0.1:5432`
 
-El frontend permite seleccionar el modelo, cargar una imagen, ejecutar la predicción y visualizar el resultado. También incluye la opción de comparar MobileNetV2 y ResNet50 usando la misma imagen, mostrando los resultados principales de cada modelo.
+Credenciales locales de PostgreSQL:
 
-Este repositorio no incluye dependencias pesadas ni archivos generados localmente. No se suben carpetas como venv, node_modules, dist, bases de datos SQLite generadas, imágenes analizadas ni archivos temporales. Esto mantiene el repositorio limpio, liviano y fácil de clonar.
+- Host: `127.0.0.1`
+- Puerto: `5432`
+- Base de datos: `clasificador_imagenes_ia`
+- Usuario: `clasificador_app`
+- Contrasena: `ClasificadorIA2026Local`
+- URL SQLAlchemy: `postgresql+psycopg://clasificador_app:ClasificadorIA2026Local@localhost:5432/clasificador_imagenes_ia`
 
-Para ejecutar el backend después de descargar el proyecto, se deben instalar las dependencias en un entorno virtual de Python. Se recomienda usar Python 3.11 porque TensorFlow estable puede presentar problemas con versiones más recientes como Python 3.13 o Python 3.14.
+Si no usas Docker, crea la base con PostgreSQL local:
 
-Comandos para instalar el backend
+```bash
+psql -U postgres -f scripts/crear_postgresql.sql
+```
+
+## Backend
+
+Requiere Python 3.11.
+
+```bash
+cd BACKENDIA
 py -3.11 -m venv venv
 venv\Scripts\activate
 pip install -r requirements.txt
+uvicorn main:aplicacion --reload --host 0.0.0.0 --port 8000
+```
 
-Comando para levantar el backend
-venv\Scripts\activate
-uvicorn main:aplicacion --reload
+El backend lee configuracion desde `BACKENDIA/.env`. La plantilla versionable esta en `BACKENDIA/.env.example`.
 
-También puede ejecutarse sin activar manualmente el entorno virtual usando este comando
-venv\Scripts\python.exe -m uvicorn main:aplicacion --reload
+Endpoint principal:
 
-La API quedará disponible en la siguiente dirección
-http://127.0.0.1:8000
+```text
+POST http://127.0.0.1:8000/predecir
+```
 
-Para ejecutar el frontend después de descargar el proyecto, se deben instalar las dependencias de Node.js.
+Campos esperados:
 
-Comandos para instalar el frontend
+- `imagen`: archivo de imagen.
+- `nombre_modelo`: `MobileNetV2` o `ResNet50`.
+- `nombre_usuario`: opcional.
+- `correo_usuario`: opcional.
+
+## Frontend
+
+```bash
+cd FRONTENDIA
 npm install
-
-Comando para levantar el frontend
 npm run dev
+```
 
-La interfaz web quedará disponible normalmente en la siguiente dirección
-http://127.0.0.1:5173
+La interfaz de desarrollo queda en `http://127.0.0.1:5173`.
 
-Para usar el sistema completo, primero debe estar ejecutándose el backend y luego el frontend. Después de abrir la interfaz web, se puede cargar una imagen, seleccionar un modelo y ejecutar la predicción. Si se usa la opción de comparación, el sistema enviará la misma imagen a MobileNetV2 y ResNet50 para mostrar los resultados de ambos modelos.
+El frontend lee `VITE_API_URL` desde `FRONTENDIA/.env`. En desarrollo apunta a `http://127.0.0.1:8000`; en Docker/Nginx se usa `/api`.
 
-Durante la primera ejecución, TensorFlow puede descargar automáticamente los pesos oficiales de ImageNet para MobileNetV2 y ResNet50 si todavía no existen en la caché local del equipo. Esto es normal y solo ocurre la primera vez que se cargan los modelos.
+## Notas operativas
 
-El objetivo de este repositorio es servir como respaldo y base de mejora continua para el sistema de clasificación de imágenes. La estructura separada de backend y frontend permite mantener el proyecto organizado, comprensible y fácil de ampliar.
+- TensorFlow puede descargar pesos oficiales de ImageNet durante la primera prediccion.
+- Las imagenes subidas se guardan en `BACKENDIA/imagenes_analizadas` o en el volumen Docker `imagenes_analizadas`.
+- La API rechaza archivos que no sean imagenes y limita cada subida a 8 MB por defecto.

@@ -1,3 +1,5 @@
+import os
+
 from fastapi import APIRouter, Depends, File, Form, HTTPException, UploadFile
 from sqlalchemy.orm import Session
 
@@ -7,6 +9,8 @@ from utilidades.archivos import guardar_imagen_analizada
 from utilidades.predicciones import predecir_imagen
 
 enrutador_prediccion = APIRouter(tags=["Predicciones"])
+TAMANO_MAXIMO_IMAGEN_MB = int(os.getenv("MAX_IMAGE_MB", "8"))
+TAMANO_MAXIMO_IMAGEN_BYTES = TAMANO_MAXIMO_IMAGEN_MB * 1024 * 1024
 
 
 @enrutador_prediccion.post("/predecir")
@@ -21,7 +25,14 @@ async def predecir(
         raise HTTPException(status_code=400, detail="El archivo debe ser una imagen")
 
     contenido_imagen = await imagen.read()
-    resultado_prediccion = predecir_imagen(contenido_imagen, nombre_modelo)
+    if len(contenido_imagen) > TAMANO_MAXIMO_IMAGEN_BYTES:
+        raise HTTPException(status_code=413, detail=f"La imagen no debe superar {TAMANO_MAXIMO_IMAGEN_MB} MB")
+
+    try:
+        resultado_prediccion = predecir_imagen(contenido_imagen, nombre_modelo)
+    except ValueError as error:
+        raise HTTPException(status_code=400, detail=str(error)) from error
+
     prediccion_principal = resultado_prediccion["predicciones"][0]
     ruta_imagen_analizada = guardar_imagen_analizada(contenido_imagen, imagen.filename)
 

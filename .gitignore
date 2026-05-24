@@ -1,4 +1,5 @@
 # Python
+BACKENDIA/.env
 BACKENDIA/venv/
 BACKENDIA/__pycache__/
 BACKENDIA/**/__pycache__/
@@ -12,6 +13,7 @@ BACKENDIA/backend_uvicorn.log
 BACKENDIA/backend_uvicorn_error.log
 
 # Node / Vite
+FRONTENDIA/.env
 FRONTENDIA/node_modules/
 FRONTENDIA/dist/
 FRONTENDIA/frontend_vite.log
